@@ -3,14 +3,14 @@
 
 
 
-<h1> Building</h1>
+#Building
 I have been using ts-node to build the project.
 
 Make sure to install the dev dependancies: typescript and ts-node;
 
 and use npm start to use the program.
 
-<h1> installing </h1>
+##installing
 
 npm install for the dependancies.
 
