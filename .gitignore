@@ -1,0 +1,5 @@
+#ignore
+/.vscode
+/node_modules
+typing.js
+typing.js.map

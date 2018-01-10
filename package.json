@@ -1,0 +1,27 @@
+{
+  "name": "cmdtyping",
+  "version": "1.0.0",
+  "description": "A simple application for testing words per miniute in node.js",
+  "main": "typing.js",
+  "scripts": {
+    "start": "ts-node typing.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "typing"
+  ],
+  "author": "sjc",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^2.3.0",
+    "decode-html": "^2.0.0",
+    "http-server": "^0.10.0",
+    "keypress": "^0.2.1",
+    "marky": "^1.2.0",
+    "request": "^2.83.0"
+  },
+  "devDependencies": {
+    "@types/node": "^4.0.35",
+    "typescript": "^2.6.2"
+  }
+}
