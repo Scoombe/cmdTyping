@@ -1,3 +1,5 @@
+import { Socket } from "net";
+
 
 //library for the handling of keypresses on the console.
 //declare function require(name:string);
@@ -6,31 +8,22 @@ let charPos:number = 0;
 const chalk = require('chalk');
 let request = require('request')
 var marky = require('marky');
+const randomWords = require('random-words');
 const decode = require('decode-html')
 let CompleteText: string;
 let curDisplayText: string;
 let done:boolean = false;
 let averageWPM: number;
 let secTimer;
+let started = false;
 keypress(process.stdin);
 /*
 *function: function for the ggeneration of text for the user to type
 */
 function generateText(){
-    //todo generate random text
-    request('https://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1', function (error:any, response:any , body:any) {
-    done = false;
-    let apiText= JSON.parse(body);
-    apiText = apiText[0]
-    CompleteText=  apiText.content.slice(3,apiText.content.length - 5);
-    CompleteText = decode(CompleteText);
-    CompleteText = CompleteText.replace(/&#8217;/g,"'");
-    CompleteText = CompleteText.replace(/<em>/g,'');
-    CompleteText = CompleteText.replace(/<em>/g,'');
-    CompleteText = CompleteText.trim();
-    console.log(CompleteText);
+    let randWords: Array<string> = randomWords({exactly:200, min:3, max:10});
+    CompleteText = randWords.join(" ");
     countdown();
-    });
 };
 
 //function for getting 1 charecter
@@ -60,7 +53,7 @@ function go(){
     console.clear();
     console.log("type");
     //console.clear();
-    console.log(CompleteText);
+    console.log(CompleteText.substring(0,100));
     marky.mark("typing");
 };
 
@@ -73,24 +66,29 @@ process.stdin.on('keypress', function (ch: any , key: any ) {
       process.stdin.pause();
     }
     let char:string  = getCurrentChar();
-    if(key.sequence == char){
-        charPos= charPos + 1;
-        if(charPos != CompleteText.length){
-            curDisplayText = CompleteText.substr(charPos,CompleteText.length-1);
-            console.clear();
-            console.log(curDisplayText);
+    if(!done){
+        if(key.sequence == char){
+            charPos= charPos + 1;
+            if(charPos != CompleteText.length){
+                curDisplayText = CompleteText.slice(charPos,charPos+100);
+                console.clear();
+                console.log(curDisplayText);
+            }
+            else{
+                console.log("finished string");
+                finished();
+            }        
         }
         else{
-            console.log("finished string");
-            finished();
-        }        
-    }
-    else{
-        console.clear();
-        console.log(`${chalk.red(char)}`);
-        console.log(curDisplayText)
-    }
-    if(finished){
+            console.clear();
+            console.log(`${chalk.red(char)}`);
+            console.log(curDisplayText)
+        }
+        if(!started){
+            getStarted();
+        }
+    }   
+    if(done){
         if(key && key.ctrl && key.name == 'r'){
             done = false;
             generateText();
@@ -98,22 +96,31 @@ process.stdin.on('keypress', function (ch: any , key: any ) {
     }
   });
 
+  function getStarted(){
+    console.log("getting Started");
+    started = true;
+    setTimeout(finished, 30000);
+  }
 
 function finished(){
+    started = false;
     done = true;
     console.clear()
-    let elapsedTime:number = Math.round(marky.stop("typing").duration / 1000);
-    console.log(`elapsedTime: ${elapsedTime}`);
-    let words:number =  Math.round(CompleteText.length / 5);;
+    let words:number =  charPos / 5
     console.log(`total words: ${words}`);
-    console.log(`total chars:${CompleteText.length}`)
-    let wordsPerMin: number =(words * 60) / elapsedTime;
     console.log(`you have finished, press control r to try another test. 
-    Words per minute: ${wordsPerMin}`);
+    Words per minute: ${words * 2}
+    You wrote ${words} words in 30 seconds`);
 
 }
 
   declare module 'readline' {
     export function emitKeypressEvents(stream: NodeJS.ReadableStream, interface?: ReadLine): void;
   }
+
+  const stdin: any = process.stdin;
+  stdin.setRawMode(true);
+  process.stdin.resume();
+  console.log(stdin.setRawMode)
+
   generateText();
