@@ -116,8 +116,4 @@ function finished(){
   declare module 'readline' {
     export function emitKeypressEvents(stream: NodeJS.ReadableStream, interface?: ReadLine): void;
   }
-  
-  const stdin: any = process.stdin;
-  stdin.setRawMode(true);
-  process.stdin.resume();
   generateText();
