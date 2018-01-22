@@ -1,21 +1,18 @@
-import { Socket } from "net";
-
-
 //library for the handling of keypresses on the console.
 //declare function require(name:string);
 let keypress = require('keypress');
 let charPos:number = 0;  
 const chalk = require('chalk');
-let request = require('request')
-var marky = require('marky');
 const randomWords = require('random-words');
-const decode = require('decode-html')
 let CompleteText: string;
 let curDisplayText: string;
 let done:boolean = false;
 let averageWPM: number;
 let secTimer;
 let started = false;
+let wordCount: number = 0;
+let finishTimeout:NodeJS.Timer;
+
 keypress(process.stdin);
 /*
 *function: function for the ggeneration of text for the user to type
@@ -23,6 +20,7 @@ keypress(process.stdin);
 function generateText(){
     let randWords: Array<string> = randomWords({exactly:200, min:3, max:10});
     CompleteText = randWords.join(" ");
+    curDisplayText = CompleteText.slice(0,100);
     countdown();
 };
 
@@ -32,14 +30,13 @@ function getCurrentChar():string{
 }
 
 function countdown(){
-    //function for calling all of the countdownFunctions
-    let Contdownfunctions: Array<any> = [oneSecond,twoSecond,threeSecond,go]
-    for (var i = 0; i < Contdownfunctions.length; i++) {
-        setTimeout(Contdownfunctions[i], i+1 * 1000);
-    }
-};
-
+    setTimeout(oneSecond,1000);
+    setTimeout(twoSecond,2000);
+    setTimeout(threeSecond,3000);
+    setTimeout(go,4000);
+}
 function oneSecond(){
+    displayText(true);
     console.log(1);
 };
 function twoSecond(){
@@ -54,7 +51,6 @@ function go(){
     console.log("type");
     //console.clear();
     console.log(CompleteText.substring(0,100));
-    marky.mark("typing");
 };
 
 
@@ -62,64 +58,99 @@ function go(){
 //function that gets the keypress
 process.stdin.on('keypress', function (ch: any , key: any ) {
     //console.log('got "keypress"', key);
-    if (key && key.ctrl && key.name == 'c') {
-      process.stdin.pause();
-    }
-    let char:string  = getCurrentChar();
+    checkReserveKeys(key);
     if(!done){
-        if(key.sequence == char){
-            charPos= charPos + 1;
-            if(charPos != CompleteText.length){
-                curDisplayText = CompleteText.slice(charPos,charPos+100);
-                console.clear();
-                console.log(curDisplayText);
-            }
-            else{
-                console.log("finished string");
-                finished();
-            }        
-        }
-        else{
-            console.clear();
-            console.log(`${chalk.red(char)}`);
-            console.log(curDisplayText)
-        }
+       checkKeyChar(key.sequence);
         if(!started){
             getStarted();
         }
-    }   
+    }
+  });
+
+  function checkReserveKeys(key: any):void{
+    //function for checking if any of the control keys have been pressed.
     if(done){
         if(key && key.ctrl && key.name == 'r'){
             done = false;
             generateText();
         }
+    } 
+    if (key && key.ctrl && key.name == 'c') {
+        process.stdin.pause();
+        clearTimeout(finishTimeout);
+        process.exit()
     }
-  });
+  }
 
+  //function to check the different keypresses
+  //make sure that the 
+  function checkKeyChar(keyPressChar:string):void{
+        let currentChar:string = getCurrentChar();
+        let isCharCorrect: boolean = false;
+        if(currentChar == keyPressChar)
+        {
+            if(currentChar == " "){
+                wordCount++;
+            }
+            charPos= charPos + 1;
+            curDisplayText = CompleteText.slice(charPos,charPos+100);
+            isCharCorrect = true;
+            displayText(true);
+        }
+        else{
+            if(currentChar == " "){
+                displayText(true,"[space]")
+            } 
+            else{
+                displayText(true, currentChar)
+            }
+        }
+  }
+
+  function displayText( clear:boolean,error?:string){
+    if(clear){
+        console.clear();
+    }
+    if(error){
+        console.log(`${chalk.red(error)}`);
+    }
+    console.log(curDisplayText);
+    console.log(`wordCount: ${wordCount}`);
+   
+  }
   function getStarted(){
     console.log("getting Started");
     started = true;
-    setTimeout(finished, 30000);
+    finishTimeout =  setTimeout(finished, 30000);
   }
 
 function finished(){
     started = false;
     done = true;
     console.clear()
-    let words:number =  charPos / 5
-    console.log(`total words: ${words}`);
+    console.log(`total words: ${wordCount}`);
     console.log(`you have finished, press control r to try another test. 
-    Words per minute: ${words * 2}
-    You wrote ${words} words in 30 seconds`);
+    Words per minute: ${wordCount * 2}
+    You wrote ${wordCount} words in 30 seconds`);
+    wordCount = 0;
 
 }
 
-  declare module 'readline' {
+declare module 'readline' {
     export function emitKeypressEvents(stream: NodeJS.ReadableStream, interface?: ReadLine): void;
-  }
+}
+
+let clear = require('clear');
+if(!console.clear){
+    console.clear = function(){
+        clear();
+    }
+}
 
   const stdin: any = process.stdin;
-  stdin.setRawMode(true);
+  if (stdin.setRawMode){
+    stdin.setRawMode(true);
+  }
   process.stdin.resume();
   console.log(stdin.setRawMode)
 
