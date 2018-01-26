@@ -49,7 +49,9 @@ function go(){
     charPos = 0;
     console.clear();
     console.log("type");
+    getStarted();
     //console.clear();
+    done = false;
     console.log(CompleteText.substring(0,100));
 };
 
@@ -61,9 +63,6 @@ process.stdin.on('keypress', function (ch: any , key: any ) {
     checkReserveKeys(key);
     if(!done){
        checkKeyChar(key.sequence);
-        if(!started){
-            getStarted();
-        }
     }
   });
 
@@ -71,7 +70,6 @@ process.stdin.on('keypress', function (ch: any , key: any ) {
     //function for checking if any of the control keys have been pressed.
     if(done){
         if(key && key.ctrl && key.name == 'r'){
-            done = false;
             generateText();
         }
     } 
