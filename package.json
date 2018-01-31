@@ -17,6 +17,7 @@
     "clear": "0.0.1",
     "http-server": "^0.10.0",
     "keypress": "^0.2.1",
+    "lodash": "^4.17.4",
     "random-words": "0.0.1"
   },
   "devDependencies": {

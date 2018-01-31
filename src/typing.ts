@@ -1,3 +1,5 @@
+import { totalmem } from "os";
+
 //library for the handling of keypresses on the console.
 //declare function require(name:string);
 let keypress = require('keypress');
@@ -7,18 +9,20 @@ const randomWords = require('random-words');
 let CompleteText: string;
 let curDisplayText: string;
 let done:boolean = false;
-let averageWPM: number;
+let averageWPM: number = 0;
 let secTimer;
 let started = false;
 let wordCount: number = 0;
 let finishTimeout:NodeJS.Timer;
-
+let timer = require('./scoombetimerstopwatch');
+let stopWatch: any;
+let wordTimes:Array<number> = []; 
 keypress(process.stdin);
 /*
-*function: function for the ggeneration of text for the user to type
+*function: function for the generation of text for the user to type
 */
 function generateText(){
-    let randWords: Array<string> = randomWords({exactly:200, min:3, max:10});
+    let randWords: Array<string> = randomWords({exactly:200, min:3, max:7});
     CompleteText = randWords.join(" ");
     curDisplayText = CompleteText.slice(0,100);
     countdown();
@@ -47,6 +51,7 @@ function threeSecond(){
 };
 function go(){
     charPos = 0;
+    wordTimes = [];
     console.clear();
     console.log("type");
     getStarted();
@@ -71,6 +76,8 @@ process.stdin.on('keypress', function (ch: any , key: any ) {
     if(done){
         if(key && key.ctrl && key.name == 'r'){
             generateText();
+            wordCount = 0;
+            averageWPM = 0;
         }
     } 
     if (key && key.ctrl && key.name == 'c') {
@@ -85,26 +92,48 @@ process.stdin.on('keypress', function (ch: any , key: any ) {
   function checkKeyChar(keyPressChar:string):void{
         let currentChar:string = getCurrentChar();
         let isCharCorrect: boolean = false;
-        if(currentChar == keyPressChar)
-        {
-            if(currentChar == " "){
-                wordCount++;
+        if(started){
+            if(currentChar == keyPressChar)
+            {
+                if(charPos != 0 && charPos % 5 == 0){
+                    console.log(`charPos: ${charPos}`);
+                    calcAverageWPM();
+                }
+                if(currentChar == " "){
+                    wordCount++;
+                }
+                charPos= charPos + 1;
+                curDisplayText = CompleteText.slice(charPos,charPos+100);
+                isCharCorrect = true;
+                displayText(true);
             }
-            charPos= charPos + 1;
-            curDisplayText = CompleteText.slice(charPos,charPos+100);
-            isCharCorrect = true;
-            displayText(true);
-        }
-        else{
-            if(currentChar == " "){
-                displayText(true,"[space]")
-            } 
             else{
-                displayText(true, currentChar)
+                if(currentChar == " "){
+                    displayText(true,"[space]")
+                } 
+                else{
+                    displayText(true, currentChar)
+                }
             }
         }
   }
+  //getting the average time to do 5 chars and then calculating the average words per minute
+  function calcAverageWPM():void{
+    wordTimes.push( stopWatch.lap());
+    let totalTimes: number = 0;
+    let count:number = 0;
+    totalTimes = 0;
+    count = 0;
+    wordTimes.forEach(time => {
+        totalTimes += time;
+        count++;
+    });
+    //average time for a word to be written
+    let averageTime:number; 
+    averageTime = totalTimes / count;
+    averageWPM =  60 / (averageTime / 1000) ;
 
+  }
   function displayText( clear:boolean,error?:string){
     if(clear){
         console.clear();
@@ -114,12 +143,14 @@ process.stdin.on('keypress', function (ch: any , key: any ) {
     }
     console.log(curDisplayText);
     console.log(`wordCount: ${wordCount}`);
+    console.log(`average Words Per Minute: ${averageWPM}`);
    
   }
-  function getStarted(){
-    console.log("getting Started");
+  function getStarted(){;
     started = true;
-    finishTimeout =  setTimeout(finished, 30000);
+    stopWatch = new timer(30000)
+    stopWatch.start();
+    stopWatch.onDone(finished);
   }
 
 function finished(){
@@ -128,10 +159,12 @@ function finished(){
     console.clear()
     console.log(`total words: ${wordCount}`);
     console.log(`you have finished, press control r to try another test. 
-    Words per minute: ${wordCount * 2}
-    You wrote ${wordCount} words in 30 seconds`);
-    wordCount = 0;
-
+Words per minute: ${wordCount * 2}
+You wrote ${wordCount} words in 30 seconds
+Calculated words per minute: ${(charPos  / 5) * 2} (This is based on the time it takes to type any 5 chars)
+Average Words Per Minute: ${averageWPM}`);
+    stopWatch.stop();
+    stopWatch.reset();
 }
 
 declare module 'readline' {
@@ -150,6 +183,4 @@ if(!console.clear){
     stdin.setRawMode(true);
   }
   process.stdin.resume();
-  console.log(stdin.setRawMode)
-
   generateText();
