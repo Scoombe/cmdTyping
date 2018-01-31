@@ -14,7 +14,7 @@ let secTimer;
 let started = false;
 let wordCount: number = 0;
 let finishTimeout:NodeJS.Timer;
-let timer = require('./scoombetimerstopwatch');
+let timer = require('timer-stopwatch');
 let stopWatch: any;
 let wordTimes:Array<number> = []; 
 keypress(process.stdin);
@@ -22,7 +22,7 @@ keypress(process.stdin);
 *function: function for the generation of text for the user to type
 */
 function generateText(){
-    let randWords: Array<string> = randomWords({exactly:200, min:3, max:7});
+    let randWords: Array<string> = randomWords({exactly:200,maxLength:7});
     CompleteText = randWords.join(" ");
     curDisplayText = CompleteText.slice(0,100);
     countdown();
