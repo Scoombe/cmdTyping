@@ -17,7 +17,7 @@
     "clear": "0.0.1",
     "http-server": "^0.11.1",
     "keypress": "^0.2.1",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.5",
     "random-words": "git+https://github.com/Scoombe/random-words.git",
     "timer-stopwatch": "git+https://github.com/Scoombe/timer-stopwatch.git"
   },
