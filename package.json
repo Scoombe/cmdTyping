@@ -22,7 +22,7 @@
     "timer-stopwatch": "git+https://github.com/Scoombe/timer-stopwatch.git"
   },
   "devDependencies": {
-    "@types/node": "^9.4.2",
+    "@types/node": "^9.4.5",
     "typescript": "^2.7.1"
   }
 }
