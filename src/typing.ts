@@ -19,10 +19,11 @@ let stopWatch: any;
 let wordTimes:Array<number> = []; 
 keypress(process.stdin);
 /*
-*function: function for the generation of text for the user to type
+*function: function for the generation of text for the user
+ to type
 */
 function generateText(){
-    let randWords: Array<string> = randomWords({exactly:200,maxLength:7});
+    let randWords: Array<string> = randomWords({exactly:200,maxLength:5});
     CompleteText = randWords.join(" ");
     curDisplayText = CompleteText.slice(0,100);
     countdown();
