@@ -5,7 +5,7 @@
   "main": "typing.js",
   "scripts": {
     "start": "ts-node src/typing.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha -r ts-node/register test/*.test.ts"
   },
   "keywords": [
     "typing"
@@ -22,7 +22,12 @@
     "timer-stopwatch": "git+https://github.com/Scoombe/timer-stopwatch.git"
   },
   "devDependencies": {
+    "@types/chai": "^4.1.2",
+    "@types/mocha": "^2.2.48",
     "@types/node": "^9.4.6",
+    "chai": "^4.1.2",
+    "mocha": "^5.0.1",
+    "ts-node": "^4.1.0",
     "typescript": "^2.7.1"
   }
 }
