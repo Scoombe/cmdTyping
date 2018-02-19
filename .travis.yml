@@ -1,4 +1,6 @@
 language: node_js
 before_install:
   - npm install --only=dev
-  - npm -v
+node_js:
+  - "node"
+  - "9"
