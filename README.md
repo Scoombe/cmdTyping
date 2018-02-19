@@ -1,5 +1,4 @@
-![Image of Build Badge](https://travis-ci.org/Scoombe/cmdTyping.svg?branch=typingVersion2)
-
+[![Build Status](https://travis-ci.org/Scoombe/cmdTyping.svg?branch=typingVersion2)](https://travis-ci.org/Scoombe/cmdTyping)
  A simple command line typing games that uses typescript and node.
 
 
