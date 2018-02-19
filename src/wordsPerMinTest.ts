@@ -13,12 +13,50 @@ export class wordsPerMinTest  {
     wordCount: number = 0;
     wordTimes:Array<number> = []; 
 
-    constructor(){
-        this.generateText();
+    
+    /**
+     * @param  {function} textGenerator? Optional Include different 
+     */
+    constructor(randomChars?: boolean) {
+        if(randomChars)
+        {
+            this.generateChars(1000);
+        }
+        else{
+            this.generateText();                        
+        }
     }
 
+    
+    /**
+     * @param  {number} charLen length of the char string to create
+     * @returns void
+     */
+    generateChars(charLen: number) :void {
+        let charString: string= "";
+        let stringLength: number = 0;
+        while (stringLength != charLen){
+            charString += this.randomChar();
+            if (stringLength %5 == 0 && stringLength != 0 && stringLength+1 != charLen)
+            {
+                charString+= " ";
+            }
+            stringLength = charString.length;
+           
+        }
+        this.CompleteText = charString;
+        this.curDisplayText = this.CompleteText.slice(0,100);
+    }
+
+    randomChar() :string {
+        const charList: Array<string> = ["1","2","3","4","5","6","7","8","9","0","a","b","c","d","e","f","g","h","i","j","k","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","x","y","z","!","\"", "£","$","%","^","&","*",",","(",")",":","@","{","}","#","?",">","<","[","]","/","\\","<",">","\'",";"]
+        let randomNum: number = Math.floor((Math.random() * charList.length));
+        return charList[randomNum];
+    }
+
+
     //method for generating random words 
-    generateText() {
+    generateText() :void {
         let randWords: Array<string> = randomWords({exactly:200,maxLength:5});
         this.CompleteText = randWords.join(" ");
         this.curDisplayText = this.CompleteText.slice(0,100);

@@ -3,9 +3,9 @@ import {expect} from 'chai';
 import {wordsPerMinTest} from "../src/wordsPerMinTest";
 
 
+const wordsTest = new wordsPerMinTest;
 describe( "Average Words Per Minute Test", function() { 
     it( "should have an correct words per mins", function() {
-        const wordsTest = new wordsPerMinTest();
         // an average of one word per second
         wordsTest.wordTimes = [1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000];
         wordsTest.calcAverageWPM();
@@ -20,7 +20,6 @@ describe( "Average Words Per Minute Test", function() {
         expect(wordsTest.averageWPM).to.equal(50);
     });
     it ("Should average out correctly",function(){
-        const wordsTest = new wordsPerMinTest();
         // Should average out to one word a second
         wordsTest.wordTimes = [1200, 1000, 800];
         wordsTest.calcAverageWPM();
@@ -34,7 +33,6 @@ describe( "Average Words Per Minute Test", function() {
 });
 
 describe( "Check Key Char test", function() {
-    const wordsTest = new wordsPerMinTest();
     wordsTest.started = true;
     wordsTest.CompleteText = "aaaaa aaaaa aaaaa "
     it( "should check correct chars", function() {
@@ -62,5 +60,26 @@ describe( "Check Key Char test", function() {
         expect( checkKeyCharObj.isCharCorrect ).to.be.true;
         expect( checkKeyCharObj.newWord).to.be.true;
         expect(wordsTest.wordCount).to.equal(1);
+    })
+})
+
+describe ( "random Char tests", function() {
+    it ( "should only return chars", function() {
+        for (let i; i < 1000; i ++) {
+            expect(typeof(wordsTest.randomChar)).to.equal("string");
+        }
+    })
+})
+
+describe ( "generating random Chars", function() {
+    it ( "should return a certain number of random chars", function() {
+        wordsTest.generateChars(100);
+        expect(wordsTest.CompleteText.length).to.equal(100);
+    }) 
+    it ( " should have spaces in it ever 5th char from the 6th pos", function() {
+        for(let i = 6; i < 100; i += 5)
+        {
+            expect(wordsTest.CompleteText.slice(i,i+1)).to.equal(" ");
+        }       
     })
 })

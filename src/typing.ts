@@ -1,6 +1,6 @@
 import { totalmem } from "os";
-import {wordsPerMinTest} from "../src/wordsPerMinTest";
-//library for the handling of keypresses on the console.
+import {wordsPerMinTest} from "./wordsPerMinTest";
+//library for the handling of key presses on the console.
 //declare function require(name:string);
 let keypress = require('keypress');
 
@@ -46,12 +46,14 @@ function checkReserveKeys(key: any):void{
     }
 }
 
-//function to check the different keypresses
-//make sure that the 
 
 
-
-
+/**
+ * @function to display Text to the console. 
+ * @param  {boolean} clear
+ * @param  {string} error? 
+ * @returns void
+ */
 function displayText( clear:boolean, error?:string) :void {
     if(clear){
         console.clear();
@@ -62,11 +64,10 @@ function displayText( clear:boolean, error?:string) :void {
     console.log(wordsTest.curDisplayText);
     console.log(`wordCount: ${wordsTest.wordCount}`);
     console.log(`average Words Per Minute: ${wordsTest.averageWPM}`);
-
 }
 
 function getStarted(){;
-    wordsTest = new wordsPerMinTest();
+    wordsTest = new wordsPerMinTest(true);
     countdown();
     stopWatch = new timer(30000);       
     stopWatch.onDone(finished);
