@@ -18,7 +18,7 @@
     "http-server": "^0.11.1",
     "keypress": "^0.2.1",
     "lodash": "^4.17.4",
-    "random-words": "^1.0.0",
+    "random-words": "^1.1.0",
     "timer-stopwatch": "git+https://github.com/Scoombe/timer-stopwatch.git"
   },
   "devDependencies": {
