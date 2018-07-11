@@ -23,7 +23,7 @@ process.stdin.on('keypress', function (ch: any , key: any ) {
         if(charCheck.isCharCorrect){
             if(charCheck.newWord){
                 wordsTest.wordTimes.push(stopWatch.lap());
-                wordsTest.calcAverageWPM();
+                wordsTest.mostRecentWPM();
             }
             displayText(true);
         }
@@ -67,7 +67,7 @@ function displayText( clear:boolean, error?:string) :void {
 }
 
 function getStarted(){;
-    wordsTest = new wordsPerMinTest(true);
+    wordsTest = new wordsPerMinTest();
     countdown();
     stopWatch = new timer(30000);       
     stopWatch.onDone(finished);
