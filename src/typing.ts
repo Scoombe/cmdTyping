@@ -23,7 +23,8 @@ process.stdin.on('keypress', function (ch: any , key: any ) {
         if(charCheck.isCharCorrect){
             if(charCheck.newWord){
                 wordsTest.wordTimes.push(stopWatch.lap());
-                wordsTest.mostRecentWPM();
+                //TODO: Finish the mostRecentWPM function 
+                wordsTest.calcAverageWPM();
             }
             displayText(true);
         }
