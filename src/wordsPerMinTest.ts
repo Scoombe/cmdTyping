@@ -94,14 +94,13 @@ export class wordsPerMinTest  {
         let totalTimes: number = 0; 
         let count: number = 0; 
         let greaterThan10: Boolean = this.wordTimes.length > 10;
-        let startingNum: number =  greaterThan10 ?    this.wordTimes.length : this.wordTimes.length - 10;
+        let startingNum: number =  greaterThan10 ? this.wordTimes.length - 10 : 0;
         for (var i = startingNum; i < this.wordTimes.length; i++) {
             totalTimes += this.wordTimes[i];
         } 
         let averageTime:number;
-        averageTime = greaterThan10 ?  totalTimes / this.wordTimes.length : totalTimes / 10;
+        averageTime = greaterThan10 ?   totalTimes / 10 :   totalTimes / this.wordTimes.length ;
         this.averageWPM = 60 / (averageTime / 1000);
-
     }
 
     /**
