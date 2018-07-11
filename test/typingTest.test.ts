@@ -68,18 +68,43 @@ describe ( "random Char tests", function() {
         for (let i; i < 1000; i ++) {
             expect(typeof(wordsTest.randomChar)).to.equal("string");
         }
-    })
+    });
 })
 
 describe ( "generating random Chars", function() {
     it ( "should return a certain number of random chars", function() {
         wordsTest.generateChars(100);
         expect(wordsTest.CompleteText.length).to.equal(100);
-    }) 
+    });
     it ( " should have spaces in it ever 5th char from the 6th pos", function() {
         for(let i = 6; i < 100; i += 5)
         {
             expect(wordsTest.CompleteText.slice(i,i+1)).to.equal(" ");
         }       
-    })
+    });
+})
+
+describe ( "generating random words ", function() {
+    it ( "should generate 200 words in the complete text", function() {
+        wordsTest.generateText();
+        expect(wordsTest.CompleteText.split(" ").length).to.equal(200);
+    });
+    it ( "should have 100 chars in the display text", function() {
+        wordsTest.generateText();
+        expect(wordsTest.curDisplayText.length).to.equal(100);
+    });
+    it ( "should only have strings in the complete text", function() {
+        wordsTest.CompleteText.split(" ").forEach(word => {
+            expect(typeof(word)).to.equal("string");
+        });
+    });
+})
+
+describe ( "constructor tests", function() {
+    it ( "should have 1000 random chars in the complete text", function() {
+
+    });
+    it ( "should have 200 words in the complete text" , function() {
+
+    });
 })
