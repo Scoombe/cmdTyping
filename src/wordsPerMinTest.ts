@@ -1,19 +1,24 @@
+import { create } from "domain";
+
 const randomWords = require("random-words");
 export class wordsPerMinTest  {
     // holds the position that the user has got through the words
     charPos :number = 0;
     // the complete text from start to finish
     CompleteText: string = "";
-
+    // the text that is being displayed 100 chars
     curDisplayText: string = "";
+    // when the words per min test is finished used for making sure keys aren't checked when it is finished
     done:boolean = false;
     averageWPM: number = 0;
+    // the most recent words per minute 
     lastTenAvWPM: number = 0;
     secTimer: number = 0;
     started = false;
     wordCount: number = 0;
     wordTimes:Array<number> = []; 
-
+    highscore = {wpm: 0, averageWPM: 0, name: ""};
+    
     
     /**
      * @param  {function} textGenerator? Optional Include different 
@@ -138,6 +143,20 @@ export class wordsPerMinTest  {
             }
         }
         return returnObj;
+    }
+
+    checkHighscore() :boolean {
+        if (this.wordCount * 2 > this.highscore.wpm) {
+            return true;
+        }
+        else {
+            return false;
+        } 
+    }
+
+    updateHighscore(userName: string) :void {
+        const newScore = { name: userName, wpm: this.wordCount* 2, averageWPM: this.averageWPM};
+        this.highscore = newScore;
     }
 
 }
