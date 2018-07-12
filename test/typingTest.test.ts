@@ -120,25 +120,25 @@ describe ( " most recent wpm tests", function () {
         // an average of one word per second
         wordsTest.wordTimes = [1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000];
         wordsTest.mostRecentWPM();
-        expect(wordsTest.averageWPM).to.equal(60);
+        expect(wordsTest.lastTenAvWPM).to.equal(60);
         // an average of 75 words per min
         wordsTest.wordTimes = [800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800,800];
         wordsTest.mostRecentWPM();
-        expect(wordsTest.averageWPM).to.equal(75);
+        expect(wordsTest.lastTenAvWPM).to.equal(75);
         // an average of 50 words per min
         wordsTest.wordTimes = [1200,1200,1200,1200,1200,1200,1200,1200,1200,1200,1200];
         wordsTest.mostRecentWPM();
-        expect(wordsTest.averageWPM).to.equal(50);
+        expect(wordsTest.lastTenAvWPM).to.equal(50);
     });
     it ("Should average out correctly",function(){
         // Should average out to one word a second
         wordsTest.wordTimes = [1200, 1000, 800];
         wordsTest.mostRecentWPM();
-        expect(wordsTest.averageWPM).to.equal(60);
+        expect(wordsTest.lastTenAvWPM).to.equal(60);
         // should average out as 1061.375 millie seconds to do a word
         // divide by 1000 and divide 60 by the result.
         wordsTest.wordTimes = [1200, 1000, 800, 999, 898, 1299, 1237, 1058];
         wordsTest.mostRecentWPM();
-        expect(wordsTest.averageWPM).to.equal(56.53044399952891);
+        expect(wordsTest.lastTenAvWPM).to.equal(56.53044399952891);
     })
 })

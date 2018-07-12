@@ -8,6 +8,7 @@ export class wordsPerMinTest  {
     curDisplayText: string = "";
     done:boolean = false;
     averageWPM: number = 0;
+    lastTenAvWPM: number = 0;
     secTimer: number = 0;
     started = false;
     wordCount: number = 0;
@@ -84,6 +85,8 @@ export class wordsPerMinTest  {
         let averageTime:number; 
         averageTime = totalTimes / count;
         this.averageWPM =  60 / (averageTime / 1000) ;
+        //calling the mostRecentWPM func
+        this.mostRecentWPM();
     }
 
     /**
@@ -100,7 +103,7 @@ export class wordsPerMinTest  {
         } 
         let averageTime:number;
         averageTime = greaterThan10 ?   totalTimes / 10 :   totalTimes / this.wordTimes.length ;
-        this.averageWPM = 60 / (averageTime / 1000);
+        this.lastTenAvWPM = 60 / (averageTime / 1000);
     }
 
     /**

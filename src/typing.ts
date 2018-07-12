@@ -23,7 +23,7 @@ process.stdin.on('keypress', function (ch: any , key: any ) {
         if(charCheck.isCharCorrect){
             if(charCheck.newWord){
                 wordsTest.wordTimes.push(stopWatch.lap());
-                wordsTest.mostRecentWPM();
+                wordsTest.calcAverageWPM();
             }
             displayText(true);
         }
@@ -63,7 +63,8 @@ function displayText( clear:boolean, error?:string) :void {
     }
     console.log(wordsTest.curDisplayText);
     console.log(`wordCount: ${wordsTest.wordCount}`);
-    console.log(`average Words Per Minute: ${wordsTest.averageWPM}`);
+    console.log(`average Words Per Minute last 10: ${wordsTest.lastTenAvWPM}`);
+    console.log(`average Words Per Minute total: ${wordsTest.averageWPM}`);
 }
 
 function getStarted(){;
