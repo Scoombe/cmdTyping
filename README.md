@@ -15,13 +15,11 @@ and use npm start to use the program.
 
 npm npm install --only=dev and npm install for the dependancies.
 
+## In Game
 
 ![alt text](https://raw.githubusercontent.com/scoombe/cmdtyping/ReadMeUpdates/Screenshots/typingscreenshot.png)
 
-This is the game while typing
+## Finish Screen
 
-![alt text](https://raw.githubusercontent.com/scoombe/cmdtyping/ReadMeUpdates/Screenshots/finishscreenscreenshot.png)
-
-This is the finish screen of the game
-
+![alt text](https://raw.githubusercontent.com/scoombe/cmdtyping/ReadMeUpdates/Screenshots/finishscreenshot.png)
 
