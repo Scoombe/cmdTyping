@@ -6,11 +6,17 @@ let keypress = require('keypress');
 
 const chalk = require('chalk');
 const randomWords = require('random-words');
+const readline = require('readline');
+
 let timer = require('timer-stopwatch');
 let stopWatch: any;
 let wordsTest: wordsPerMinTest;
+let gettingName = false; 
 
-
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
 
 keypress(process.stdin);
 
@@ -103,14 +109,33 @@ function finished(){
     wordsTest.started = false;
     wordsTest.done = true;
     console.clear()
+    if(wordsTest.checkHighscore())
+    {
+        getName();
+    }
+    else{
+        displayFinishText();
+    }
+    stopWatch.stop();
+    stopWatch.reset();
+}
+function displayFinishText() {
+    console.clear()
     console.log(`total words: ${wordsTest.wordCount}`);
     console.log(`you have finished, press control r to try another test. 
 Words per minute: ${wordsTest.wordCount * 2}
 You wrote ${wordsTest.wordCount} words in 30 seconds
 Calculated words per minute: ${(wordsTest.charPos  / 5) * 2} (This is based on the time it takes to type any 5 chars)
 Average Words Per Minute: ${wordsTest.averageWPM}`);
-    stopWatch.stop();
-    stopWatch.reset();
+    console.log(`High Score: ${wordsTest.highscore.name}, WPM: ${wordsTest.highscore.wpm} averageWPM: ${wordsTest.highscore.averageWPM}`)
+}
+
+function getName(){ 
+    rl.clearLine();
+    rl.question("Please enter your username for your highscore: ", (name:string) => {
+      wordsTest.updateHighscore(name);
+      displayFinishText();
+    })
 }
 
 declare module 'readline' {
