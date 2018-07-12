@@ -16,6 +16,12 @@ and use npm start to use the program.
 npm npm install --only=dev and npm install for the dependancies.
 
 
+![alt text](https://raw.githubusercontent.com/scoombe/cmdtyping/ReadMeUpdates/Screenshots/typingscreenshot.png)
 
+This is the game while typing
+
+![alt text](https://raw.githubusercontent.com/scoombe/cmdtyping/ReadMeUpdates/Screenshots/finishscreenscreenshot.png)
+
+This is the finish screen of the game
 
 
