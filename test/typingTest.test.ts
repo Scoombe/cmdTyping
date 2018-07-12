@@ -142,3 +142,21 @@ describe ( " most recent wpm tests", function () {
         expect(wordsTest.lastTenAvWPM).to.equal(56.53044399952891);
     })
 })
+
+describe ( " highscores are updated ", function () {
+    it ( "should check if it's a high score" , function() {
+        wordsTest.wordCount = 30;
+        expect(wordsTest.checkHighscore()).to.be.true;
+        wordsTest.wordCount = 60;
+        expect(wordsTest.checkHighscore()).to.be.true;
+        wordsTest.averageWPM = 120
+        expect(wordsTest.checkHighscore()).to.be.true;  
+        wordsTest.wordCount = 60;
+        expect(wordsTest.checkHighscore()).to.be.false;
+    })
+    it ( " update a highscore " , function() {
+        wordsTest.updateHighscore("sam");
+        expect(wordsTest.highscore).to.equal({wpm: 120, averageWPM: 120, name: "sam"});
+    })
+
+})
