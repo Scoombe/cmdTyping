@@ -17,9 +17,9 @@ npm npm install --only=dev and npm install for the dependancies.
 
 ## In Game
 
-![alt text](https://raw.githubusercontent.com/scoombe/cmdtyping/ReadMeUpdates/Screenshots/typingscreenshot.png)
+![alt text](https://raw.githubusercontent.com/scoombe/cmdtyping/typingVersion2/Screenshots/typingscreenshot.png)
 
 ## Finish Screen
 
-![alt text](https://raw.githubusercontent.com/scoombe/cmdtyping/ReadMeUpdates/Screenshots/finishscreenshot.png)
+![alt text](https://raw.githubusercontent.com/scoombe/cmdtyping/typingVersion2/Screenshots/finishscreenshot.png)
 
