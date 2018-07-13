@@ -18,18 +18,37 @@ export class wordsPerMinTest  {
     wordCount: number = 0;
     wordTimes:Array<number> = []; 
     highscore = {wpm: 0, averageWPM: 0, name: ""};
-    
-    
+    usingRandomChar:boolean = false; 
     /**
-     * @param  {function} textGenerator? Optional Include different 
+     * @param  {boolean} randomChars? if it is random chars or it is random words 
      */
     constructor(randomChars?: boolean) {
         if(randomChars)
         {
+            this.usingRandomChar = true;
             this.generateChars(1000);
         }
         else{
             this.generateText();                        
+        }
+    }
+    
+    restartTest () {
+        this.charPos = 0;
+        this.CompleteText = "";
+        this.curDisplayText = "";
+        this.done = false;
+        this.averageWPM = 0;
+        this.lastTenAvWPM = 0;
+        this.secTimer = 0;
+        this.started = false;
+        this.wordCount = 0;
+        this.wordTimes = [];
+        if (this.usingRandomChar) {
+            this.generateChars(1000);
+        }
+        else {
+            this.generateText(); 
         }
     }
 
