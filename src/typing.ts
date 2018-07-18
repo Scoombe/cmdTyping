@@ -10,7 +10,8 @@ const readline = require('readline');
 let timer = require('timer-stopwatch');
 let stopWatch: any;
 let wordsTest: wordsPerMinTest;
-let gettingName = false; 
+let gettingName:boolean = false; 
+let displayString:string = ``; 
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -48,11 +49,12 @@ function startTest() {
  */
 function beginCountdown() {
     displayText(true);
-    setTimeout(function(){console.log(1);},1000);
-    setTimeout(function(){console.log(2);},2000);
-    setTimeout(function(){console.log(3);},3000);
+    setTimeout(function(){displayText(true,'3');},1000);
+    setTimeout(function(){displayText(true,'2');},2000);
+    setTimeout(function(){displayText(true,'1');},3000);
     setTimeout(go,4000);
 }
+
 
 /**
  * @function for starting the words test.
@@ -61,11 +63,10 @@ function beginCountdown() {
  * And calls the display test function
  */
 function go() {
-    console.clear();
-    console.log("type");
+    displayText(true, "Type");
     wordsTest.started = true;
     stopWatch.start();
-    displayText(false);
+    
 };
 
 
@@ -94,6 +95,9 @@ process.stdin.on('keypress', function (ch: any , key: any ) {
             displayText(true, charCheck.errorText)
         }
     }
+    else if(!gettingName){
+        printText();
+    }
 });
 
 function checkReserveKeys (key: any):void {
@@ -113,21 +117,31 @@ function checkReserveKeys (key: any):void {
 
 /**
  * @function to display Text to the console. 
- * @param  {boolean} clear
- * @param  {string} error? 
+ * @param  {boolean} clear: If the current text needs to be cleared or not.
+ * @param  {string} error? Error text if there is one.
  * @returns void
  */
 function displayText( clear:boolean, error?:string) :void {
     if(clear){
-        console.clear();
+        displayString = ``;
     }
     if(error){
-        console.log(`${chalk.red(error)}`);
+        displayString += `${chalk.red(error)}
+`;
     }
-    console.log(wordsTest.curDisplayText);
-    console.log(`words typed: ${chalk.green(`${wordsTest.wordCount}`)}`);
-    console.log(`10 word average WPM:  ${chalk.green(`${wordsTest.lastTenAvWPM}`)}`);
-    console.log(`total average WPM:  ${chalk.green(`${wordsTest.averageWPM}`)}`);
+displayString += `${wordsTest.curDisplayText}
+words typed: ${chalk.green(`${wordsTest.wordCount}`)}
+10 word average WPM:  ${chalk.green(`${wordsTest.lastTenAvWPM}`)}
+total average WPM:  ${chalk.green(`${wordsTest.averageWPM}`)}`;
+    printText();
+}
+
+/**
+ * @function to print the displayString text to the console.
+ */
+function printText() : void {
+    console.clear();
+    console.log(displayString);
 }
 
 
@@ -147,26 +161,26 @@ function finished(){
     stopWatch.reset();
 }
 function displayFinishText() {
-    console.clear()
-    console.log(`${chalk.red(`you have finished, press control r to go again. `)}`);
-    console.log(`Words written: ${wordsTest.wordCount}`);
-    console.log(`Words per minute: ${chalk.green(`${wordsTest.wordCount * 2}`)}
+    displayString = `${chalk.red(`you have finished, press control r to go again. `)}
+Words written: ${wordsTest.wordCount}
+Words per minute: ${chalk.green(`${wordsTest.wordCount * 2}`)}
 You wrote ${wordsTest.wordCount} words in 30 seconds
 Calculated words per minute: ${chalk.green(`${(wordsTest.charPos  / 5) * 2} `)} (This is based on the time it takes to type any 5 chars)
-Average Words Per Minute: ${chalk.green(`${wordsTest.averageWPM}`)}`);
-    console.log(`${chalk.green(
-    `High Score`)}
+Average Words Per Minute: ${chalk.green(`${wordsTest.averageWPM}`)}
+${chalk.green(`High Score`)}
 From: ${chalk.green(`${wordsTest.highscore.name}`)}
 WPM:  ${chalk.green(`${wordsTest.highscore.wpm}`)}
-AverageWPM: ${chalk.green(`${wordsTest.highscore.averageWPM}`)}
-    `);
+AverageWPM: ${chalk.green(`${wordsTest.highscore.averageWPM}`)}`;
+    printText();
 }
 
 function getName(){ 
     rl.clearLine();
+    gettingName = true;
     rl.question("Please enter your username for your highscore: ", (name:string) => {
       wordsTest.updateHighscore(name);
       displayFinishText();
+      gettingName = false;
     })
 }
 
