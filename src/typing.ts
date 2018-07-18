@@ -1,5 +1,5 @@
 import { totalmem } from "os";
-import {wordsPerMinTest} from "./wordsPerMinTest";
+import {wordsPerMinTest} from "wpmtest";
 //library for the handling of key presses on the console.
 let keypress = require('keypress');
 
@@ -9,7 +9,7 @@ const readline = require('readline');
 
 let timer = require('timer-stopwatch');
 let stopWatch: any;
-let wordsTest: wordsPerMinTest;
+let wordsTest: any;
 let gettingName:boolean = false; 
 let displayString:string = ``; 
 
