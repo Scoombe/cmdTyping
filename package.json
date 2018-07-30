@@ -27,7 +27,7 @@
   "devDependencies": {
     "@types/chai": "^4.1.4",
     "@types/mocha": "^5.2.5",
-    "@types/node": "^10.5.3",
+    "@types/node": "^10.5.4",
     "chai": "^4.1.2",
     "mocha": "^5.2.0",
     "ts-node": "^5.0.1",
