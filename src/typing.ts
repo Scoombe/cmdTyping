@@ -115,7 +115,7 @@ total average WPM: ${chalk.green(`${this.wordsTest.averageWPM}`)}`;
 Words written: ${this.wordsTest.wordCount}
 Words per minute: ${chalk.green(`${this.wordsTest.wordCount * 2}`)}
 You wrote ${this.wordsTest.wordCount} words in 30 seconds
-Calculated words per minute: ${chalk.green(`${(this.wordsTest.charPos  / 5) * 2} `)} (This is based on the time it takes to type any 5 chars)
+Calculated words per minute: ${chalk.green(`${(this.wordsTest.charPos  / 5) * 2}`)} (This is based on the time it takes to type any 5 chars)
 Average Words Per Minute: ${chalk.green(`${this.wordsTest.averageWPM}`)}
 ${chalk.green(`High Score`)}
 From: ${chalk.green(`${this.wordsTest.highscore.name}`)}
