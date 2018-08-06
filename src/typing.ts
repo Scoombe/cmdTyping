@@ -1,5 +1,7 @@
 import { totalmem } from "os";
 import {wordsPerMinTest} from "wpmtest";
+import { AnyTxtRecord } from "dns";
+import { Func } from "mocha";
 
 const chalk = require("chalk");
 
@@ -15,9 +17,17 @@ export class cmdTyping {
      * @param  {Function} printText function that is passed to the class to print text
      * @param  {Function} getName function that gets the name
      */
-    constructor(printText:Function, getName:Function, minutes: number) {
+    constructor(printText:Function, getName:Function, minutes: number, dummyFinish? :Boolean) {
         let context = this;
-        this.wordsTest = new wordsPerMinTest(function(){context.finished(context)}, minutes, false);
+        this.wordsTest
+        if(dummyFinish) {
+            this.wordsTest = new wordsPerMinTest(function(){}, minutes, false);
+        }
+        else
+        {
+            this.wordsTest = new wordsPerMinTest(function(){context.finished(context)}, minutes, false);
+        }
+        
         this.printText = printText;
         this.getName = getName;
     }
@@ -28,20 +38,24 @@ export class cmdTyping {
      */
     startTest() {
         this.wordsTest.restartTest();
-        this.beginCountdown();
+        let context = this;
+        let three: Function = function(){context.getDisplayText(true,'3')};
+        let two: Function = function(){context.getDisplayText(true,'2')};
+        let one: Function =function(){context.getDisplayText(true, '1')};
+        let go: Function = function(){context.go(context)};
+        this.beginCountdown(three,two,one,go);
     }
 
     /**
      * @function that displays a countdown in the console.
      * Also calls the go function after 4 seconds
      */
-    beginCountdown() {
+    beginCountdown (three: Function, two: Function, one: Function, go : Function) : void {
         this.getDisplayText(true);
-        let context = this;
-        setTimeout(function(){context.getDisplayText(true,'3');},1000);
-        setTimeout(function(){context.getDisplayText(true,'2');},2000);
-        setTimeout(function(){context.getDisplayText(true,'1');},3000);
-        setTimeout(function(){context.go(context)},4000);
+        setTimeout(three,1000);
+        setTimeout(two,2000);
+        setTimeout(one,3000);
+        setTimeout(go,4000);
     }
 
     /**
@@ -63,10 +77,10 @@ export class cmdTyping {
     checkKey(keyEntered: string) {
         if(this.wordsTest.started){
             let charCheck = this.wordsTest.checkKeyChar(keyEntered);
-            if(charCheck.isCharCorrect){
+            if (charCheck.isCharCorrect) {
                 this.getDisplayText(true);
             }
-            else{
+            else {
                 this.getDisplayText(true, charCheck.errorText)
             }
         }
