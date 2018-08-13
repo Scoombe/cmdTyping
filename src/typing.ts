@@ -1,5 +1,6 @@
 import { totalmem } from "os";
-import {wordsPerMinTest} from "wpmtest";
+let wordsPerMinTest = require('wpmtest');
+wordsPerMinTest = wordsPerMinTest.wordsPerMinTest;
 import { AnyTxtRecord } from "dns";
 import { Func } from "mocha";
 
