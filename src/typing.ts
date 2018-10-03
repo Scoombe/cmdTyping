@@ -122,7 +122,6 @@ total average WPM: ${chalk.green(`${this.wordsTest.averageWPM}`)}`;
         else{
             context.getFinishText();
         }
-        context.wordsTest.finishStopWatch();
     }
     
     getFinishText() {
