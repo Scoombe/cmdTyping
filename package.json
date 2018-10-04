@@ -22,7 +22,11 @@
     "random-words": "^1.1.0",
     "readline": "^1.3.0",
     "timer-stopwatch": "git+https://github.com/Scoombe/timer-stopwatch.git",
+<<<<<<< HEAD
     "wpmtest": "^1.3.3"
+=======
+    "wpmtest": "^1.3.5"
+>>>>>>> update-wpmtest@1.3.5
   },
   "devDependencies": {
     "@types/chai": "^4.1.6",
