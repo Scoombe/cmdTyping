@@ -32,7 +32,7 @@ AverageWPM: ${chalk.green(`0`)}`);
     });
     it ("Should check key chars correctly ", function() {
         typeTest.wordsTest.started = true;
-        typeTest.wordsTest.CompleteText = "aaaaaaaaaaaa";
+        typeTest.wordsTest.completeText = "aaaaaaaaaaaa";
         typeTest.checkKey("b");
         expect(typeTest.displayString).to.equal(getTestDisplayText("aaaaaaaaaaaa",0,0,0,"a"));
         typeTest.checkKey("a");

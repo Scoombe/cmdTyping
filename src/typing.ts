@@ -22,11 +22,11 @@ export class cmdTyping {
         let context = this;
         this.wordsTest
         if(dummyFinish) {
-            this.wordsTest = new wordsPerMinTest(function(){}, minutes, false);
+            this.wordsTest = new wordsPerMinTest(function(){}, minutes, { randomWords:false });
         }
         else
         {
-            this.wordsTest = new wordsPerMinTest(function(){context.finished(context)}, minutes, false);
+            this.wordsTest = new wordsPerMinTest(function(){context.finished(context)}, minutes, { randomWords: false });
         }
         
         this.printText = printText;
