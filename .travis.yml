@@ -2,6 +2,10 @@ language: node_js
 before_install:
   - npm install --only=dev
 node_js:
+  - "10"
   - "9"
   - "8"
   - "7"
+script:
+  - npm run test
+  - npm run lint
