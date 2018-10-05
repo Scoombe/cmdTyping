@@ -14,7 +14,6 @@
         "no-empty": false,
         "no-var-requires": false,
         "only-arrow-functions": false,
-        "prefer-const": false,
         "quotemark": [true, "single", "avoid-escape"],
         "ter-indent": [true, 4, { "SwitchCase": 1 }],
         "trailing-comma": false

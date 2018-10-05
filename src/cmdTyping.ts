@@ -1,10 +1,8 @@
 import { cmdTyping } from './typing';
 
 // library for the handling of key presses on the console.
-let keypress = require('keypress');
-
-const chalk = require('chalk');
 const readline = require('readline');
+const keypress = require('keypress');
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -69,7 +67,7 @@ declare module 'readline' {
     export function emitKeypressEvents(stream: NodeJS.ReadableStream, interface?: ReadLine): void;
 }
 
-let clear = require('clear');
+const clear = require('clear');
 if (!console.clear) {
     console.clear = function() {
         clear();

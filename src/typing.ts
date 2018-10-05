@@ -16,7 +16,7 @@ export class cmdTyping {
      * @param  {Function} getName function that gets the name
      */
     constructor(printText: Function, getName: Function, minutes: number, dummyFinish?: Boolean) {
-        let context = this;
+        const context = this;
         if (dummyFinish) {
             this.wordsTest = new wordsPerMinTest(function() {}, minutes, { randomWords: false });
         } else {
@@ -32,11 +32,11 @@ export class cmdTyping {
      */
     startTest() {
         this.wordsTest.restartTest();
-        let context = this;
-        let three: Function = function() { context.getDisplayText(true, '3'); };
-        let two: Function = function() { context.getDisplayText(true, '2'); };
-        let one: Function = function() { context.getDisplayText(true, '1'); };
-        let go: Function = function() { context.go(context); };
+        const context = this;
+        const three: Function = function() { context.getDisplayText(true, '3'); };
+        const two: Function = function() { context.getDisplayText(true, '2'); };
+        const one: Function = function() { context.getDisplayText(true, '1'); };
+        const go: Function = function() { context.go(context); };
         this.beginCountdown(three, two, one, go);
     }
 
@@ -70,7 +70,7 @@ export class cmdTyping {
      */
     checkKey(keyEntered: string) {
         if (this.wordsTest.started) {
-            let charCheck = this.wordsTest.checkKeyChar(keyEntered);
+            const charCheck = this.wordsTest.checkKeyChar(keyEntered);
             if (charCheck.isCharCorrect) {
                 this.getDisplayText(true);
             } else {
