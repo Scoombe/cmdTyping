@@ -13,7 +13,7 @@ const rl = readline.createInterface({
 keypress(process.stdin);
 
 main();
-let typing: any;
+let typing: cmdTyping;
 function main() {
     typing = new cmdTyping(printText, getName, 0.5);
     typing.startTest();
@@ -27,7 +27,7 @@ function printText(): void {
     console.log(typing.displayString);
 }
 
-function getName() {
+function getName(): void {
     rl.clearLine();
     typing.gettingName = true;
     rl.question('Please enter your username for your highscore: ', (name: string) => {
@@ -44,7 +44,7 @@ function getName() {
  *                      @param {object} 'ch': the char object '
  *                      @param {object} 'key': the key object the .sequence is used to get the char entered.
  */
-process.stdin.on('keypress', function(ch: any , key: any ) {
+process.stdin.on('keypress', function(ch: any , key: any ): void {
     // seeing if the key is reserved.
     checkReserveKeys(key);
     typing.checkKey(key.sequence);
