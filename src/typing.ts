@@ -30,7 +30,7 @@ export class cmdTyping {
      * @function that starts the words per minute test
      * Also calls the countdown function
      */
-    startTest() {
+    startTest(): void {
         this.wordsTest.restartTest();
         const context = this;
         const three: Function = function() { context.getDisplayText(true, '3'); };
@@ -58,7 +58,7 @@ export class cmdTyping {
      * starts the stopwatch
      * And calls the display test function
      */
-    go(context: any) {
+    go(context: any): void {
         context.getDisplayText(true, 'Type');
         context.wordsTest.started = true;
         context.wordsTest.startStopWatch();
@@ -66,9 +66,9 @@ export class cmdTyping {
 
     /**
      * @function
-     * @param  {string} keyEntered
+     * @param  {string} keyEntered keychar to check
      */
-    checkKey(keyEntered: string) {
+    checkKey(keyEntered: string): void {
         if (this.wordsTest.started) {
             const charCheck = this.wordsTest.checkKeyChar(keyEntered);
             if (charCheck.isCharCorrect) {
@@ -102,7 +102,14 @@ total average WPM: ${chalk.green(`${this.wordsTest.averageWPM}`)}`;
         this.printText();
     }
 
-    finished(context: any) {
+    finished(context: {
+        wordsTest: {
+            started: boolean,
+            done: boolean,
+            checkHighscore: Function,
+        },
+        getFinishText: Function,
+    }) {
         context.wordsTest.started = false;
         context.wordsTest.done = true;
         console.clear();
@@ -113,7 +120,7 @@ total average WPM: ${chalk.green(`${this.wordsTest.averageWPM}`)}`;
         }
     }
 
-    getFinishText() {
+    getFinishText(): void {
         this.displayString = `${chalk.red(`you have finished, press control r to go again. `)}
 Words written: ${this.wordsTest.wordCount}
 Words per minute: ${chalk.green(`${this.wordsTest.wordCount * 2}`)}
